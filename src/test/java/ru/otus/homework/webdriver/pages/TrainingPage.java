@@ -11,11 +11,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.otus.homework.webdriver.support.Colors;
 
 /**
- * Страница тренажёра: https://otus.home.kartushin.su/training.html
+ * Страница тренажёра: https://wishlist.otus.kartushin.su/login
  */
 public class TrainingPage {
 
-    public static final String URL = "https://otus.home.kartushin.su/training.html";
+    public static final String URL = "https://wishlist.otus.kartushin.su/login";
 
     private static final By TEXT_INPUT = By.id("textInput");
     private static final By OPEN_MODAL = By.id("openModalBtn");
