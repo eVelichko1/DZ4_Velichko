@@ -37,26 +37,9 @@ public class TrainingPage {
     }
 
     public TrainingPage open() {
-        RuntimeException lastFailure = null;
-        for (int attempt = 1; attempt <= 2; attempt++) {
-            driver.get(URL);
-            String source = driver.getPageSource();
-            if (source != null && source.contains("502 Bad Gateway")) {
-                lastFailure = new IllegalStateException(
-                        "Ресурс " + URL + " ответил 502 Bad Gateway (попытка " + attempt + ")"
-                );
-                continue;
-            }
-            try {
-                wait.until(ExpectedConditions.visibilityOfElementLocated(TEXT_INPUT));
-                return this;
-            } catch (RuntimeException error) {
-                lastFailure = error;
-            }
-        }
-        throw lastFailure == null
-                ? new IllegalStateException("Не удалось открыть " + URL)
-                : lastFailure;
+        driver.get(URL);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(TEXT_INPUT));
+        return this;
     }
 
     public String enterText(String text) {

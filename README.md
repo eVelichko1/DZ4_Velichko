@@ -29,8 +29,6 @@ xvfb-run -a mvn test
 mvn test
 ```
 
-Если стенд отвечает `502 Bad Gateway`, сценарий останавливается с этой ошибкой: страница в этот момент недоступна.
-
 ## Структура
 
 - `driver/ChromeDriverFactory` — опции Chrome для трёх режимов
