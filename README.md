@@ -1,6 +1,6 @@
 # Домашнее задание: WebDriver
 
-Автотесты страницы [https://otus.home.kartushin.su/training.html](https://otus.home.kartushin.su/training.html).
+Автотесты страницы [https://wishlist.otus.kartushin.su/login](https://wishlist.otus.kartushin.su/login).
 Каждый сценарий открывает Google Chrome со своей опцией запуска и проверяет элемент страницы.
 
 ## Сценарии
