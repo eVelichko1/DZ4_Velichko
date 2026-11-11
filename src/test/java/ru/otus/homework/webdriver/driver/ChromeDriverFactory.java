@@ -5,11 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-/**
- * Создаёт ChromeDriver с опцией, которую требует конкретный сценарий.
- * Общие флаги нужны, чтобы Chrome стабильно стартовал в Linux-контейнере
- * и не меняют запрошенный режим.
- */
+
 public final class ChromeDriverFactory {
 
     private ChromeDriverFactory() {

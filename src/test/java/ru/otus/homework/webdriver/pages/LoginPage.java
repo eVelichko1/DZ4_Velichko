@@ -8,9 +8,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-/**
- * Страница https://the-internet.herokuapp.com/login
- */
 public class LoginPage {
 
     public static final String URL = "https://the-internet.herokuapp.com/login";
