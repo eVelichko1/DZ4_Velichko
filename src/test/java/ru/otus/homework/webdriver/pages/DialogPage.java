@@ -40,7 +40,7 @@ public class DialogPage {
         if (dialogs.isEmpty()) {
             return false;
         }
-        WebElement dialog = dialogs.get(0);
+        WebElement dialog = dialogs.getFirst();
         return dialog.getDomAttribute("open") != null && dialog.isDisplayed();
     }
 
