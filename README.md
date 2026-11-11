@@ -1,7 +1,6 @@
-# Домашнее задание: WebDriver
+# WebDriver
 
 Сайт [https://the-internet.herokuapp.com](https://the-internet.herokuapp.com).
-Каждый сценарий открывает Google Chrome со своей опцией запуска и проверяет элемент страницы.
 
 ## Сценарии
 
