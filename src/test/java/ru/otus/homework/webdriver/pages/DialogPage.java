@@ -1,7 +1,6 @@
 package ru.otus.homework.webdriver.pages;
 
 import java.time.Duration;
-import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -9,12 +8,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+/**
+ * Страница https://the-internet.herokuapp.com/dialog
+ */
 public class DialogPage {
 
     public static final String URL = "https://the-internet.herokuapp.com/dialog";
 
     private static final By OPEN_MODAL = By.id("open-modal");
-    private static final By MODAL = By.id("modal-dialog");
     private static final By MODAL_TITLE = By.id("modal-title");
 
     private final WebDriver driver;
@@ -36,12 +37,11 @@ public class DialogPage {
     }
 
     public boolean isModalOpen() {
-        List<WebElement> dialogs = driver.findElements(MODAL);
-        if (dialogs.isEmpty()) {
-            return false;
-        }
-        WebElement dialog = dialogs.getFirst();
-        return dialog.getDomAttribute("open") != null && dialog.isDisplayed();
+        Object open = ((JavascriptExecutor) driver).executeScript(
+                "const dialog = document.getElementById('modal-dialog');"
+                        + "return dialog !== null && dialog.open === true;"
+        );
+        return Boolean.TRUE.equals(open);
     }
 
     public void openModal() {

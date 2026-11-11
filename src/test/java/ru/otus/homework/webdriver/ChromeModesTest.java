@@ -8,6 +8,8 @@ import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.function.Consumer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.OutputType;
@@ -21,6 +23,7 @@ import ru.otus.homework.webdriver.pages.LoginPage;
 
 class ChromeModesTest {
 
+    private static final Logger log = LogManager.getLogger(ChromeModesTest.class);
     private static final String NUMBER = "42";
     private static final String USERNAME = "tomsmith";
     private static final String PASSWORD = "SuperSecretPassword!";
@@ -29,9 +32,13 @@ class ChromeModesTest {
     @DisplayName("Headless: в поле ввода значение 42")
     void numberInputMatchesEnteredValueInHeadlessChrome() {
         withChrome(ChromeLaunchMode.HEADLESS, driver -> {
+            log.info("Headless: открываю {}", InputsPage.URL);
             InputsPage page = new InputsPage(driver).open();
+            page.enterNumber(NUMBER);
 
-            assertThat(page.enterNumber(NUMBER)).isEqualTo(NUMBER);
+            String actual = page.valueFromPage();
+            log.info("Значение поля, прочитанное через JavaScript: {}", actual);
+            assertThat(actual).isEqualTo(NUMBER);
         });
     }
 
@@ -41,10 +48,12 @@ class ChromeModesTest {
         withChrome(ChromeLaunchMode.KIOSK, driver -> {
             DialogPage page = new DialogPage(driver).open();
 
+            log.info("Киоск: открываю {}", DialogPage.URL);
             assertThat(page.openModalButtonLabel()).isEqualTo("Open modal dialog");
             assertThat(page.isModalOpen()).isFalse();
             page.openModal();
 
+            log.info("Модальное окно открыто: {}, заголовок: {}", page.isModalOpen(), page.modalTitle());
             assertThat(page.isModalOpen()).isTrue();
             assertThat(page.modalTitle()).isEqualTo("Modal dialog");
         });
@@ -56,10 +65,13 @@ class ChromeModesTest {
         withChrome(ChromeLaunchMode.FULL_SCREEN, driver -> {
             LoginPage page = new LoginPage(driver).open();
 
+            log.info("Полный экран: открываю {} и вхожу как {}", LoginPage.URL, USERNAME);
             assertThat(page.submitButtonLabel()).isEqualTo("Login");
             page.login(USERNAME, PASSWORD);
 
-            assertThat(page.loggedInAs()).isEqualTo("Logged in as " + USERNAME);
+            String actual = page.loggedInAs();
+            log.info("Текст после входа, прочитанный через JavaScript: {}", actual);
+            assertThat(actual).isEqualTo("Logged in as " + USERNAME);
         });
     }
 

@@ -8,6 +8,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+/**
+ * Страница https://the-internet.herokuapp.com/login
+ */
 public class LoginPage {
 
     public static final String URL = "https://the-internet.herokuapp.com/login";
@@ -56,7 +59,11 @@ public class LoginPage {
 
     public String loggedInAs() {
         wait.until(ExpectedConditions.urlContains("/secure"));
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(LOGGED_IN)).getText().trim();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(LOGGED_IN));
+        Object text = ((JavascriptExecutor) driver).executeScript(
+                "return document.querySelector('p span#username').parentElement.innerText;"
+        );
+        return text == null ? "" : text.toString().trim();
     }
 
     private void scrollIntoView(WebElement element) {

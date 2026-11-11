@@ -2,11 +2,15 @@ package ru.otus.homework.webdriver.pages;
 
 import java.time.Duration;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+/**
+ * Страница https://the-internet.herokuapp.com/inputs
+ */
 public class InputsPage {
 
     public static final String URL = "https://the-internet.herokuapp.com/inputs";
@@ -27,10 +31,16 @@ public class InputsPage {
         return this;
     }
 
-    public String enterNumber(String value) {
+    public void enterNumber(String value) {
         WebElement input = wait.until(ExpectedConditions.elementToBeClickable(NUMBER));
         input.clear();
         input.sendKeys(value);
-        return input.getDomProperty("value");
+    }
+
+    public String valueFromPage() {
+        Object value = ((JavascriptExecutor) driver).executeScript(
+                "return document.querySelector(\"input[type='number']\").value;"
+        );
+        return value == null ? "" : value.toString();
     }
 }
