@@ -98,7 +98,7 @@ class ChromeModesTest {
             Path file = directory.resolve(mode.name().toLowerCase() + "-" + stamp + ".png");
             Files.write(file, screenshot.getScreenshotAs(OutputType.BYTES));
         } catch (IOException | RuntimeException ignored) {
-            // Снимок нужен только для разбора падения и не должен скрывать исходную ошибку.
+
         }
     }
 }
