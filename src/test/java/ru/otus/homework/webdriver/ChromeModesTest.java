@@ -32,8 +32,9 @@ class ChromeModesTest {
     @DisplayName("Headless: в поле ввода значение 42")
     void numberInputMatchesEnteredValueInHeadlessChrome() {
         withChrome(ChromeLaunchMode.HEADLESS, driver -> {
-            log.info("Headless: открываю {}", InputsPage.URL);
-            InputsPage page = new InputsPage(driver).open();
+            InputsPage page = new InputsPage(driver);
+            log.info("Headless: открываю {}", page.url());
+            page.open();
             page.enterNumber(NUMBER);
 
             String actual = page.valueFromPage();
@@ -46,9 +47,10 @@ class ChromeModesTest {
     @DisplayName("Киоск: по кнопке Open modal dialog открывается модальное окно")
     void modalOpensInKioskMode() {
         withChrome(ChromeLaunchMode.KIOSK, driver -> {
-            DialogPage page = new DialogPage(driver).open();
+            DialogPage page = new DialogPage(driver);
+            log.info("Киоск: открываю {}", page.url());
+            page.open();
 
-            log.info("Киоск: открываю {}", DialogPage.URL);
             assertThat(page.openModalButtonLabel()).isEqualTo("Open modal dialog");
             assertThat(page.isModalOpen()).isFalse();
             page.openModal();
@@ -63,9 +65,10 @@ class ChromeModesTest {
     @DisplayName("Полный экран: после входа видно Logged in as tomsmith")
     void secureAreaShowsLoggedInUserInFullscreen() {
         withChrome(ChromeLaunchMode.FULL_SCREEN, driver -> {
-            LoginPage page = new LoginPage(driver).open();
+            LoginPage page = new LoginPage(driver);
+            log.info("Полный экран: открываю {} и вхожу как {}", page.url(), USERNAME);
+            page.open();
 
-            log.info("Полный экран: открываю {} и вхожу как {}", LoginPage.URL, USERNAME);
             assertThat(page.submitButtonLabel()).isEqualTo("Login");
             page.login(USERNAME, PASSWORD);
 
@@ -98,7 +101,7 @@ class ChromeModesTest {
             Path file = directory.resolve(mode.name().toLowerCase() + "-" + stamp + ".png");
             Files.write(file, screenshot.getScreenshotAs(OutputType.BYTES));
         } catch (IOException | RuntimeException ignored) {
-
+            // Снимок нужен только для разбора падения и не должен скрывать исходную ошибку.
         }
     }
 }

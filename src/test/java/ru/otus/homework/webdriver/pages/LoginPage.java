@@ -1,36 +1,34 @@
 package ru.otus.homework.webdriver.pages;
 
-import java.time.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-/**
- * Страница https://the-internet.herokuapp.com/login
- */
-public class LoginPage {
-
-    public static final String URL = "https://the-internet.herokuapp.com/login";
+public class LoginPage extends BasePage<LoginPage> {
 
     private static final By USERNAME = By.id("username");
     private static final By PASSWORD = By.id("password");
     private static final By SUBMIT = By.cssSelector("#login button[type='submit']");
     private static final By LOGGED_IN = By.xpath("//p[span[@id='username']]");
 
-    private final WebDriver driver;
-    private final WebDriverWait wait;
-
     public LoginPage(WebDriver driver) {
-        this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        super(driver);
     }
 
-    public LoginPage open() {
-        driver.get(URL);
+    @Override
+    protected String path() {
+        return "/login";
+    }
+
+    @Override
+    protected void waitForPage() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(USERNAME));
+    }
+
+    @Override
+    protected LoginPage self() {
         return this;
     }
 
@@ -64,14 +62,5 @@ public class LoginPage {
                 "return document.querySelector('p span#username').parentElement.innerText;"
         );
         return text == null ? "" : text.toString().trim();
-    }
-
-    private void scrollIntoView(WebElement element) {
-        if (driver instanceof JavascriptExecutor executor) {
-            executor.executeScript(
-                    "arguments[0].scrollIntoView({block: 'center', inline: 'center'});",
-                    element
-            );
-        }
     }
 }
